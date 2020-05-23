@@ -28,8 +28,8 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
     $_SESSION['name'] = $name;
     $_SESSION['lastName'] = $lastName;
 
-    //header('location: vote.php');
-    header('location: testAuth.php');
+    header('location: vote.php');
+    //header('location: testAuth.php');
   } else {
     $message = 'La información es incorrecta';
   }

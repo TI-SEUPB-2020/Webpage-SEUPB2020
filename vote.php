@@ -9,20 +9,27 @@
 </head>
 <body>
 	<?php
-		include 'db_connection.php'; 
+		include 'db_connection.php';
 		$consult = "select * from schools";
 		$result = mysqli_query($db_connection, $consult);
 		while($row = mysqli_fetch_assoc($result)) {
-			$url = "src='images/".$row['school_name']."/1.jpg'";
-			echo "<input type='image' class='btn btn-info btn-lg' id='Btn".$row['id_school']."' ".$url." width='200' height='200' data-id=".$url.">";
+			$url = "images/".$row['school_name']."/1.jpg";
+			echo "<button onclick='imageClick(".$row['id_school'].")' data-toggle='modal' data-target='#myModal'><img src='".$url."'' width='100' height='100'></button>";
 		}
+
+    if (isset($_GET['schoolId'])) {
+      $schoolId = $_GET['schoolId'];
+      $imagesSql = "INSERT INTO images (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
+      $votesSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
+      $studentsSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
+    }
 	?>
 <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          <img id="modalImage" src="" width=100%></img>
+          <img id='modalImage' src="" width=100%></img>
         </div>
         <div class="modal-body">
         	<h4 class="modal-title">Titulo</h4>
@@ -30,7 +37,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" id="goToWarning">Votar por esta forografía</button>
+          <button type="button" class="btn btn-default" data-toggle='modal' data-target='#warning'>Votar por esta forografía</button>
         </div>
       </div>
     </div>
@@ -43,7 +50,7 @@
         	¿Estás seguro de que quieres votar por esta forografía?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" id="yes">Sí</button>
+          <button type="button" class="btn btn-default" onclick="vote()">Sí</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
         </div>
       </div>
@@ -51,58 +58,61 @@
   </div>
   
 </div>
+<?php
 
+session_start();
+$idCode = $_SESSION['idCode'];
+$name = $_SESSION['name'];
+$lastName = $_SESSION['lastName'];
+
+echo 'El id es:' . $idCode . '</br>';
+echo 'El nombre es:' . $name . '</br>';
+echo 'El apellido es:' . $lastName . '</br>';
+
+?>
 <script>
-$(document).ready(function(){
-  $("#Btn1").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/ADMI/1.jpg");
-  });
-  $("#Btn2").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/COMERCIAL/1.jpg");
-  });
-  $("#Btn3").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/COMUNICACION/1.jpg");
-  });
-  $("#Btn4").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/CSJ/1.jpg");
-  });
-  $("#Btn5").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/DISENO/1.jpg");
-  });
-  $("#Btn6").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/DTI/1.jpg");
-  });
-  $("#Btn7").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/EIE/1.jpg");
-  });
-  $("#Btn8").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/FINANCIERA/1.jpg");
-  });
-  $("#Btn9").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/MARKETING/1.jpg");
-  });
-  $("#Btn10").click(function(){
-    $("#myModal").modal();
-    $("#modalImage").attr("src", "images/MEE/1.jpg");
-  });
+  var currentImg = 0;
+  function imageClick(index) {
+    var name = "";
+    currentImg = index;
+    switch (index) {
+      case 1:
+        name = "ADMI";
+        break;
+      case 2:
+        name = "COMERCIAL";
+        break;
+      case 3:
+        name = "COMUNICACION";
+        break;
+      case 4:
+        name = "CSJ";
+        break;
+      case 5:
+        name = "DISENO";
+        break;
+      case 6:
+        name = "DTI";
+        break;
+      case 7:
+        name = "EIE";
+        break;
+      case 8:
+        name = "FINANCIERA";
+        break;
+      case 9:
+        name = "MARKETING";
+        break;
+      case 10:
+        name = "MEE";
+        break;
+    }
+    $("#modalImage").attr("src", "images/" + name + "/1.jpg");
+  }
 
-  $("#goToWarning").click(function(){
-    $("#warning").modal();
-  });
-  $("#yes").click(function(){
-    //Submit
-  });
-});
+  function vote() {
+    location.replace("vote.php?schoolId=" + currentImg);
+  }
 </script>
-
 </body>
 </html>
