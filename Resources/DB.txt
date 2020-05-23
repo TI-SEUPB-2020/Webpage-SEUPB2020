@@ -1,3 +1,5 @@
+CREATE DATABASE seupb_photos CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+
 CREATE TABLE registered_students (
 	code INT(5) NOT NULL PRIMARY KEY,
 	names VARCHAR(100) NOT NULL,
@@ -31,3 +33,5 @@ INSERT INTO SCHOOLS VALUES ('7','EIE');
 INSERT INTO SCHOOLS VALUES ('8','FINANCIERA');
 INSERT INTO SCHOOLS VALUES ('9','MARKETING');
 INSERT INTO SCHOOLS VALUES ('10','MEE');
+
+INSERT INTO registered_students VALUES ('42641','Weimar Alexander','Torres Herrera','6','false');
