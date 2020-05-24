@@ -16,13 +16,6 @@
 			$url = "images/".$row['school_name']."/1.jpg";
 			echo "<button onclick='imageClick(".$row['id_school'].")' data-toggle='modal' data-target='#myModal'><img src='".$url."'' width='100' height='100'></button>";
 		}
-
-    if (isset($_GET['schoolId'])) {
-      $schoolId = $_GET['schoolId'];
-      $imagesSql = "INSERT INTO images (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
-      $votesSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
-      $studentsSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
-    }
 	?>
 <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
@@ -111,7 +104,7 @@ echo 'El apellido es:' . $lastName . '</br>';
   }
 
   function vote() {
-    location.replace("vote.php?schoolId=" + currentImg);
+    location.replace("final.php?schoolId=" + currentImg);
   }
 </script>
 </body>
