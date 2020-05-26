@@ -8,24 +8,22 @@
 </head>
 <body>
   <?php
-    $_GET['schoolId'];
-
-    session_start();
-    $idCode = $_SESSION['idCode'];
-    $name = $_SESSION['name'];
-    $lastName = $_SESSION['lastName'];
-    session_destroy();
-
-    echo 'El id es:' . $idCode . '</br>';
-    echo 'El nombre es:' . $name . '</br>';
-    echo 'El apellido es:' . $lastName . '</br>';
-
-    if (isset($_GET['schoolId'])) {
-      $schoolId = $_GET['schoolId'];
-      $imagesSql = "INSERT INTO images (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
-      $votesSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
-      $studentsSql = "INSERT INTO registered_students (firstname, lastname, email) VALUES ('John', 'Doe', 'john@example.com')";
+  	session_start();
+    if (isset($_GET['schoolId']) && isset($_SESSION['idCode']) ) {
+    	echo "".$_GET['schoolId']."";
+      	$idCode = $_SESSION['idCode'];
+      	$idSchool = $_GET['schoolId'];
+		include 'db_connection.php';
+		$result = mysqli_query($db_connection, "select voted from registered_students where code='$idCode';");
+		echo "".$result."";
+		if ($result == 0) {
+			$schoolsSql = mysqli_query($db_connection, "UPDATE schools set votes=votes+1 where id_school=".$idSchool.";");
+			$votesSql = mysqli_query($db_connection, 'INSERT INTO votes (id_user, id_school, date) VALUES ('.$idCode.', '.$idSchool.', NOW( ));');
+			$studentsSql = mysqli_query($db_connection, "UPDATE registered_students set voted=1 where code=".$idCode.";");
+		}
     }
+    session_destroy();
+    header("Location: http://seupblapaz.com/");
   ?>
 </body>
 </html>

@@ -17,7 +17,7 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
   $name = $_POST['name'];
   $lastName = $_POST['lastName'];
 
-  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and names = '$name' and last_names = '$lastName'";
+  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name'";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
 
@@ -25,8 +25,7 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
 
   if ($results['count'] > 0) {
     $_SESSION['idCode'] = $idCode;
-    $_SESSION['name'] = $name;
-    $_SESSION['lastName'] = $lastName;
+    $_SESSION['full_name'] = "".$lastName." ".$name."";
 
     header('location: vote.php');
     //header('location: testAuth.php');
@@ -43,6 +42,8 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
   <head>
     <meta charset="utf-8">
     <title>Verificación</title>
+    <link rel="icon" type="image/png" href="res/favicon.png">
+    <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
 
