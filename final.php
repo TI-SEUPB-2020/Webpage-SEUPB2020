@@ -14,7 +14,8 @@
       }
     }
     session_destroy();
-    //header("Location: http://seupblapaz.com/");
+    sleep(5);
+    header("Location: index.php");
   ?>
 <!DOCTYPE html>
 <html lang="es">
