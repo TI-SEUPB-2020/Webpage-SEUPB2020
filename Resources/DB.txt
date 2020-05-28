@@ -1,3 +1,5 @@
+CREATE DATABASE seupb_photos CHARACTER SET utf8 COLLATE utf8_spanish_ci;
+
 CREATE TABLE schools (
 	id_school INT(2) NOT NULL PRIMARY KEY,
 	school_name VARCHAR(100) NOT NULL,

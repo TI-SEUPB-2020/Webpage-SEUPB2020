@@ -17,7 +17,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
   $name = $_GET['name'];
   $lastName = $_GET['lastName'];
 
-  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name'";
+  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
 
@@ -25,14 +25,15 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 
   if ($results['count'] > 0) {
     $_SESSION['idCode'] = $idCode;
-    $_SESSION['full_name'] = "".$lastName." ".$name."";
+    $_SESSION['full_name'] = "$lastName $name";
 
     header('location: vote.php');
-    //header('location: testAuth.php');
   } else {
     $message = 'La información es incorrecta';
   }
 
+} else if (!empty($_GET['idCode']) || !empty($_GET['name']) || !empty($_GET['lastName'])) {
+  $message = 'Datos incompletos';
 }
 
 ?>
@@ -55,7 +56,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;
-			background-color: #464646;  
+			background-color: #464646;
 		}
 		.center_div{
 		    margin: 0 auto;
@@ -76,7 +77,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 		  display: block;
 		  margin-left: auto;
 		  margin-right: auto;
-		  width: 50%; 
+		  width: 50%;
 		  height: auto;
 		}
     </style>
