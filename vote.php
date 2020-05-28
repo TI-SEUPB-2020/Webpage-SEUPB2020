@@ -8,17 +8,91 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="icon" type="image/png" href="res/favicon.png">
   <link rel="stylesheet" href="stylesheet.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial;
+    }
+
+    .header {
+      text-align: center;
+      padding: 32px;
+    }
+
+    .row {
+      display: -ms-flexbox; /* IE10 */
+      display: flex;
+      -ms-flex-wrap: wrap; /* IE10 */
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .column {
+      -ms-flex: 25%; /* IE10 */
+      flex: 25%;
+      max-width: 25%;
+      padding: 0 4px;
+    }
+
+    .column img {
+      margin-top: 8px;
+      vertical-align: middle;
+      width: 33%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+      .column {
+        -ms-flex: 50%;
+        flex: 50%;
+        max-width: 50%;
+      }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+      .column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-	<?php
-		include 'db_connection.php';
-		$consult = "select * from schools";
-		$result = mysqli_query($db_connection, $consult);
-		while($row = mysqli_fetch_assoc($result)) {
-			$url = "images/".$row['school_name']."/1.jpg";
-			echo "<button onclick='imageClick(".$row['id_school'].")' data-toggle='modal' data-target='#myModal'><img src='".$url."'' width='100' height='100'></button>";
-		}
-	?>
+  <div class="header">
+    <h1>Vota por tu favorita</h1>
+    <p>Selecciona la imágen y vota por ella a continuación de ver su título y su descripción</p>
+  </div>
+
+  <div class="container" style="height: 100%; width: 80%;">
+    <div class="row"> 
+      <?php
+          include 'db_connection.php';
+          $consult = "select * from schools";
+          $result = mysqli_query($db_connection, $consult);
+          $i = 0;
+          while($row = mysqli_fetch_assoc($result)) {
+            if ($i == 0) {
+              echo "<div class='column'>";
+              $i++;
+            }
+            $url = "images/".$row['school_name']."/1.jpg";
+            echo "<img onclick='imageClick(".$row['id_school'].")' data-toggle='modal' data-target='#myModal' src='".$url."' style='width=100%'/>";
+            $i++;
+            if ($i == 4) {
+              echo "</div>";
+              $i = 0;
+            }
+          }
+        ?>
+    </div>
+  </div>
 <div class="container">
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
