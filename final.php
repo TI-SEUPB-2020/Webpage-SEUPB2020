@@ -48,7 +48,7 @@ body {
 <div class="content"align="center">
   <br><br><br><br><br><br>
 <h1 align="center">¡Gracias por participar!</h1>
-<img src="res/seupb.png"style="max-width:30%;height:auto;">
+<img src="res/seupb.png"style="max-width:30%; height:auto;">
 </div>
 <form align="center" action="index.php">
   <button type="submit" class="btn btn-warning">Volver</button>
