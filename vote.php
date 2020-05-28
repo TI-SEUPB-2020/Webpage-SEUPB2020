@@ -27,7 +27,7 @@
           <img id='modalImage' src="" width=100%></img>
         </div>
         <div class="modal-body">
-        	<h4 class="modal-title">Titulo</h4>
+        	<h4 class="modal-title" value="Tit"></h4>
           	<p>Descripción.</p>
         </div>
         <div class="modal-footer">

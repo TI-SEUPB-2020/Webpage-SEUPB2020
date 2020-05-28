@@ -42,6 +42,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#9932cc" />
     <title>Verificación</title>
     <link rel="icon" type="image/png" href="res/favicon.png">
     <link rel="stylesheet" href="stylesheet.css">
@@ -49,7 +50,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
 		body {
-			background-image: url(res/authentication.jpg);
+			background-image: url('res/authentication.jpg');
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-attachment: fixed;
@@ -87,28 +88,30 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
       echo "<h1>$message</h1>";
     }
     ?>
-    <div class="container">
-    	<img src="res/logo.png" class="center">
-    </div>
-    <div class="container">
-    	<img src="res/titulo.png" class="center" style="margin-bottom: 10%;">
-    </div>
-    <div class="container center_div">
-	    <form>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Código</label>
-		    <input type="text" class="form-control" name="idCode" id="idCode" placeholder="Ingresa tu código">
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Nombres</label>
-		    <input type="text" class="form-control" name="name" id="name" placeholder="Ingresa tu o tus nombres">
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Apellidos</label>
-		    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Ingresa tus dos apellidos">
-		  </div>
-		  <button type="submit" class="btn btn-warning">Verificar</button>
-		</form>
+    <div class="overlay bg-rgba-black-light text-white flex-center">
+	    <div class="container">
+	    	<img src="res/logo.png" class="center">
+	    </div>
+	    <div class="container">
+	    	<img src="res/titulo.png" class="center" style="margin-bottom: 10%;">
+	    </div>
+	    <div class="container center_div">
+		    <form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Código</label>
+			    <input type="text" class="form-control" name="idCode" id="idCode" placeholder="Ingresa tu código">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Nombres</label>
+			    <input type="text" class="form-control" name="name" id="name" placeholder="Ingresa tu o tus nombres">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Apellidos</label>
+			    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Ingresa tus dos apellidos">
+			  </div>
+			  <button type="submit" class="btn btn-warning">Verificar</button>
+			</form>
+		</div>
 	</div>
   </body>
 </html>
