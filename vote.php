@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Vota por tu favorito</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -42,7 +42,7 @@
     .column img {
       margin-top: 8px;
       vertical-align: middle;
-      width: 33%;
+      width: 10%;
     }
 
     /* Responsive layout - makes a two column-layout instead of four columns */
@@ -65,35 +65,53 @@
   </style>
 </head>
 <body>
+  <script>
+    var table;
+    $.ajax({
+          url: 'schools.php',
+          type: 'get',
+          dataType: 'JSON',
+          success: function(response){
+            var o = 0;
+            table = response;
+            for(var i = 0; i < response.length; i++) {
+              if (o == 0) {
+                $("#images").append("<div class='column'>");
+                o++;
+              }
+              var url = "images/" + table[i].school_name + "/1.jpg";
+              var index = i + 1;
+              $("#images").append("<img onclick='imageClick(" + index + ")' data-toggle='modal' data-target='#myModal' src='" + url + "' style='width: 33.33%;'/>");
+              o++;
+              if (o == 4) {
+                $("#images").append("</div>");
+                o = 0;
+              }
+            }
+          }
+      });
+    var currentImg = 0;
+    function imageClick(index) {
+      currentImg = index;
+      $("#modalImage").attr("src", "images/" + table[currentImg - 1].school_name + "/1.jpg");
+      $("#title").html(table[currentImg - 1].title);
+      $("#description").html(table[currentImg - 1].description);   
+    }
+
+    function vote() {
+      location.replace("final.php?schoolId=" + currentImg);
+    }
+  </script>
   <div class="header">
     <h1>Vota por tu favorita</h1>
     <p>Selecciona la imágen y vota por ella a continuación de ver su título y su descripción</p>
   </div>
 
   <div class="container" style="height: 100%; width: 80%;">
-    <div class="row"> 
+    <div class="row" id="images"> 
       <?php
-          session_start();
-          $idCode = $_SESSION['idCode'];
-
-          include 'db_connection.php';
-          $consult = "select * from schools";
-          $result = mysqli_query($db_connection, $consult);
-          $i = 0;
-          while($row = mysqli_fetch_assoc($result)) {
-            if ($i == 0) {
-              echo "<div class='column'>";
-              $i++;
-            }
-            $url = "images/".$row['school_name']."/1.jpg";
-            echo "<img onclick='imageClick(".$row['id_school'].")' data-toggle='modal' data-target='#myModal' src='".$url."' style='width=100%'/>";
-            $i++;
-            if ($i == 4) {
-              echo "</div>";
-              $i = 0;
-            }
-          }
-        ?>
+        session_start();
+      ?>
     </div>
   </div>
 <div class="container">
@@ -104,7 +122,7 @@
           <img id='modalImage' src="" width=100%></img>
         </div>
         <div class="modal-body">
-        	<h4 class="modal-title" value="Tit" id="title"></h4>
+        	<h4 class="modal-title"id="title">Hola</h4>
           	<p style="color: black;" id="description"></p>
         </div>
         <div class="modal-footer">
@@ -128,52 +146,7 @@
       </div>
     </div>
   </div>
-  
+  <lol></lol>
 </div>
-<script>
-  var currentImg = 0;
-  function imageClick(index) {
-    var name = "";
-    currentImg = index;
-    switch (index) {
-      case 1:
-        name = "ADMI";
-        break;
-      case 2:
-        name = "COMERCIAL";
-        break;
-      case 3:
-        name = "COMUNICACION";
-        break;
-      case 4:
-        name = "CSJ";
-        break;
-      case 5:
-        name = "DISENO";
-        break;
-      case 6:
-        name = "DTI";
-        break;
-      case 7:
-        name = "EIE";
-        break;
-      case 8:
-        name = "FINANCIERA";
-        break;
-      case 9:
-        name = "MARKETING";
-        break;
-      case 10:
-        name = "MEE";
-        break;
-    }
-    $("#modalImage").attr("src", "images/" + name + "/1.jpg");
-  }
-
-  function vote() {
-    location.replace("final.php?schoolId=" + currentImg);
-    document.getElementById('title').value = 
-  }
-</script>
 </body>
 </html>
