@@ -21,8 +21,6 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
 
-  echo $results;
-
   if ($results['count'] == 1) {
     $_SESSION['idCode'] = $idCode;
 
