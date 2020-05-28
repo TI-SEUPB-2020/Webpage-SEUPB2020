@@ -12,27 +12,26 @@ require 'db_connection.php';
 session_start();
 $message = '';
 
-if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName'])) {
-  $idCode = $_GET['idCode'];
-  $name = $_GET['name'];
-  $lastName = $_GET['lastName'];
+if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastName'])) {
+  $idCode = $_POST['idCode'];
+  $name = $_POST['name'];
+  $lastName = $_POST['lastName'];
 
   $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
 
-  debug_to_console($results);
+  echo $results;
 
-  if ($results['count'] > 0) {
+  if ($results['count'] == 1) {
     $_SESSION['idCode'] = $idCode;
-    $_SESSION['full_name'] = "$lastName $name";
 
     header('location: vote.php');
   } else {
-    $message = 'La información es incorrecta';
+    $message = 'La información es incorrecta o el usuario ya votó';
   }
 
-} else if (!empty($_GET['idCode']) || !empty($_GET['name']) || !empty($_GET['lastName'])) {
+} else if (!empty($_POST['idCode']) || !empty($_POST['name']) || !empty($_POST['lastName'])) {
   $message = 'Datos incompletos';
 }
 
@@ -47,7 +46,8 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
     <title>Verificación</title>
     <link rel="icon" type="image/png" href="res/favicon.png">
     <link rel="stylesheet" href="stylesheet.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
 		body {
@@ -83,12 +83,6 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
     </style>
   </head>
   <body>
-
-    <?php
-    if (!empty($message)) {
-      echo "<h1>$message</h1>";
-    }
-    ?>
     <div class="overlay bg-rgba-black-light text-white flex-center">
 	    <div class="container">
 	    	<img src="res/logo.png" class="center">
@@ -97,21 +91,26 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 	    	<img src="res/titulo.png" class="center" style="margin-bottom: 10%;">
 	    </div>
 	    <div class="container center_div">
-		    <form>
+		    <form action="authentication.php" method="post">
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Código</label>
-			    <input type="text" class="form-control" name="idCode" id="idCode" placeholder="Ingresa tu código">
+			    <input type="text" class="form-control" name="idCode" placeholder="Ingresa tu código">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Nombres</label>
-			    <input type="text" class="form-control" name="name" id="name" placeholder="Ingresa tu o tus nombres">
+			    <input type="text" class="form-control" name="name" placeholder="Ingresa tu o tus nombres">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Apellidos</label>
-			    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Ingresa tus dos apellidos">
+			    <input type="text" class="form-control" name="lastName" placeholder="Ingresa tus dos apellidos">
 			  </div>
-			  <button type="submit" class="btn btn-warning">Verificar</button>
+			  <input type="submit" class="btn btn-warning" value="Verificar"></input>
 			</form>
+				<?php
+		    		if (!empty($message)) {
+		      			echo "<div class='alert alert-danger' role='alert'>$message</div>";
+		       		}
+		    	?>
 		</div>
 	</div>
   </body>

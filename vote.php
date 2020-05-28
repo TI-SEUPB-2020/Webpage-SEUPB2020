@@ -73,6 +73,9 @@
   <div class="container" style="height: 100%; width: 80%;">
     <div class="row"> 
       <?php
+          session_start();
+          $idCode = $_SESSION['idCode'];
+
           include 'db_connection.php';
           $consult = "select * from schools";
           $result = mysqli_query($db_connection, $consult);
@@ -101,8 +104,8 @@
           <img id='modalImage' src="" width=100%></img>
         </div>
         <div class="modal-body">
-        	<h4 class="modal-title" value="Tit"></h4>
-          	<p>Descripción.</p>
+        	<h4 class="modal-title" value="Tit" id="title"></h4>
+          	<p style="color: black;" id="description"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -127,14 +130,6 @@
   </div>
   
 </div>
-<?php
-
-session_start();
-$idCode = $_SESSION['idCode'];
-$name = $_SESSION['name'];
-$lastName = $_SESSION['lastName'];
-
-?>
 <script>
   var currentImg = 0;
   function imageClick(index) {
@@ -177,6 +172,7 @@ $lastName = $_SESSION['lastName'];
 
   function vote() {
     location.replace("final.php?schoolId=" + currentImg);
+    document.getElementById('title').value = 
   }
 </script>
 </body>
