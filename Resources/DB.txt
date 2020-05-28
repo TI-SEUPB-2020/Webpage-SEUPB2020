@@ -1,13 +1,3 @@
-CREATE DATABASE seupb_photos CHARACTER SET utf8 COLLATE utf8_spanish_ci;
-
-CREATE TABLE registered_students (
-	code INT(5) NOT NULL PRIMARY KEY,
-	full_name VARCHAR(100) NOT NULL,
-	id_school INT(2) NOT NULL,
-	voted BOOLEAN NOT NULL,
-	FOREIGN KEY (id_school) REFERENCES schools(id_school)
-);
-
 CREATE TABLE schools (
 	id_school INT(2) NOT NULL PRIMARY KEY,
 	school_name VARCHAR(100) NOT NULL,
@@ -16,6 +6,13 @@ CREATE TABLE schools (
 	votes INT(4) NOT NULL
 );
 
+CREATE TABLE registered_students (
+	code INT(5) NOT NULL PRIMARY KEY,
+	full_name VARCHAR(100) NOT NULL,
+	id_school INT(2) NOT NULL,
+	voted BOOLEAN NOT NULL,
+	FOREIGN KEY (id_school) REFERENCES schools(id_school)
+);
 
 CREATE TABLE votes (
 	id_vote INT(7) NOT NULL PRIMARY KEY AUTO_INCREMENT,
