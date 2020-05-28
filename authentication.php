@@ -17,7 +17,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
   $name = $_GET['name'];
   $lastName = $_GET['lastName'];
 
-  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name'";
+  $query = "SELECT COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
 
@@ -25,14 +25,15 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 
   if ($results['count'] > 0) {
     $_SESSION['idCode'] = $idCode;
-    $_SESSION['full_name'] = "".$lastName." ".$name."";
+    $_SESSION['full_name'] = "$lastName $name";
 
     header('location: vote.php');
-    //header('location: testAuth.php');
   } else {
     $message = 'La información es incorrecta';
   }
 
+} else if (!empty($_GET['idCode']) || !empty($_GET['name']) || !empty($_GET['lastName'])) {
+  $message = 'Datos incompletos';
 }
 
 ?>
@@ -42,6 +43,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#9932cc" />
     <title>Verificación</title>
     <link rel="icon" type="image/png" href="res/favicon.png">
     <link rel="stylesheet" href="stylesheet.css">
@@ -49,12 +51,12 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
 		body {
-			background-image: url(res/authentication.jpg);
+			background-image: url('res/authentication.jpg');
 			background-position: center center;
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: cover;
-			background-color: #464646;  
+			background-color: #464646;
 		}
 		.center_div{
 		    margin: 0 auto;
@@ -75,7 +77,7 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
 		  display: block;
 		  margin-left: auto;
 		  margin-right: auto;
-		  width: 50%; 
+		  width: 50%;
 		  height: auto;
 		}
     </style>
@@ -87,28 +89,30 @@ if (!empty($_GET['idCode']) && !empty($_GET['name']) && !empty($_GET['lastName']
       echo "<h1>$message</h1>";
     }
     ?>
-    <div class="container">
-    	<img src="res/logo.png" class="center">
-    </div>
-    <div class="container">
-    	<img src="res/titulo.png" class="center" style="margin-bottom: 10%;">
-    </div>
-    <div class="container center_div">
-	    <form>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Código</label>
-		    <input type="text" class="form-control" name="idCode" id="idCode" placeholder="Ingresa tu código">
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Nombres</label>
-		    <input type="text" class="form-control" name="name" id="name" placeholder="Ingresa tu o tus nombres">
-		  </div>
-		  <div class="form-group">
-		    <label for="exampleInputEmail1">Apellidos</label>
-		    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Ingresa tus dos apellidos">
-		  </div>
-		  <button type="submit" class="btn btn-warning">Verificar</button>
-		</form>
+    <div class="overlay bg-rgba-black-light text-white flex-center">
+	    <div class="container">
+	    	<img src="res/logo.png" class="center">
+	    </div>
+	    <div class="container">
+	    	<img src="res/titulo.png" class="center" style="margin-bottom: 10%;">
+	    </div>
+	    <div class="container center_div">
+		    <form>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Código</label>
+			    <input type="text" class="form-control" name="idCode" id="idCode" placeholder="Ingresa tu código">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Nombres</label>
+			    <input type="text" class="form-control" name="name" id="name" placeholder="Ingresa tu o tus nombres">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">Apellidos</label>
+			    <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Ingresa tus dos apellidos">
+			  </div>
+			  <button type="submit" class="btn btn-warning">Verificar</button>
+			</form>
+		</div>
 	</div>
   </body>
 </html>
