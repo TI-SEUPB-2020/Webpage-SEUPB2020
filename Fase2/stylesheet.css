@@ -1,0 +1,16 @@
+body {
+  background-color: #000000;
+}
+h1 {
+  color: white;
+}
+p {
+  color: white;
+}
+#backgroundVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
