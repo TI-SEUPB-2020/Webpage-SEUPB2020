@@ -1,15 +1,16 @@
   <?php
     session_start();
-    if (isset($_GET['schoolId']) && isset($_SESSION['idCode']) ) {
+    if (isset($_SESSION['id_image']) && isset($_SESSION['idCode']) && isset($_SESSION['id_school'])) {
       $idCode = $_SESSION['idCode'];
-      $idSchool = $_GET['schoolId'];
+      $idImage = $_SESSION['id_image'];
+      $idSchool = $_SESSION['id_school'];
       include 'db_connection.php';
       $query = "SELECT voted from registered_students where code='$idCode' and voted='false';";
       $consult = mysqli_query($db_connection, $query);
       $result = mysqli_num_rows($consult);
       if ($result == 1) {
-        $query1 = mysqli_query($db_connection, "UPDATE schools set votes=votes+1 where id_school=".$idSchool.";");
-        $query2 = mysqli_query($db_connection, 'INSERT INTO votes (id_user, id_school, date) VALUES ('.$idCode.', '.$idSchool.', NOW( ));');
+        $query1 = mysqli_query($db_connection, "UPDATE images set votes=votes+1 where id_image=".$idImage.";");
+        $query2 = mysqli_query($db_connection, 'INSERT INTO votes (id_user, id_image, id_school, date) VALUES ('.$idCode.', '.$idImage.', '.$idSchool.', NOW( ));');
         $query3 = mysqli_query($db_connection, "UPDATE registered_students set voted=1 where code=".$idCode.";");
       }
     }
