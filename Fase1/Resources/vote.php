@@ -1,6 +1,5 @@
 <?php
   session_start();
-  echo "<p id='school'>".$_SESSION['id_school']."</p>";
 ?>
 <html lang="es">
 <head>
@@ -13,21 +12,30 @@
   <link rel="icon" type="image/png" href="res/favicon.png">
   <link rel="stylesheet" href="stylesheet.css">
   <style>
-      
+    body{
+      color: white;
+      background-image: linear-gradient(to bottom, rgba(153, 50, 204,2), rgba(0,0,0,1));
+       background-attachment: fixed
+    
+  background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
   </style>
 </head>
 <body>
   <script>
     var table;
     $.ajax({
-          url: 'images.php?id_school=' + $("#school").text(),
+          url: 'images.php?id_school=' + '<?php  $_SESSION['id_school']?>',
           type: 'get',
           dataType: 'JSON',
           success: function(response){
             table = response;
             for(var i = 0; i < response.length; i++) {
+              var url = "images/" + table[i].location + "/" + i + ".jpg";
               var index = i + 1;
-              var url = "images/" + table[i].location + "/" + index + ".jpg";
               $("#images").append("<img onclick='imageClick(" + index + ")' data-toggle='modal' data-target='#myModal' src='" + url + "' style='width: 33.33%;'/>");
             }
           }
@@ -35,50 +43,14 @@
     var currentImg = 0;
     function imageClick(index) {
       currentImg = index;
-      console.log(currentImg);
-      $("#modalImage").attr("src", "images/" + table[currentImg - 1].location + "/" + currentImg + ".jpg");
+      $("#modalImage").attr("src", "images/" + table[currentImg - 1].school_name + "/1.jpg");
       $("#title").html(table[currentImg - 1].title);
-      $("#description").html(table[currentImg - 1].description);
+      $("#description").html(table[currentImg - 1].description);   
     }
 
     function vote() {
-      var prefix;
-      switch(parseInt($("#school").text())){
-        case 1:
-          prefix = "AD";
-          break;
-        case 2:
-          prefix = "IC";
-          break;
-        case 3:
-          prefix = "CM";
-          break;
-        case 4:
-          prefix = "CS";
-          break;
-        case 5:
-          prefix = "DI";
-          break;
-        case 6:
-          prefix = "DT"
-          break;
-        case 7:
-          prefix = "EI";
-          break;
-        case 8:
-          prefix = "FI";
-          break;
-        case 9:
-          prefix = "MK";
-          break;
-        case 10:
-          prefix = "EM";
-          break;
-
-      }
-      location.replace("final.php?imageId=" + prefix + currentImg);
+      location.replace("final.php?schoolId=" + currentImg);
     }
-
   </script>
   <div class="header">
     <h1>Vota por tu favorita</h1>

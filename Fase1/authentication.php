@@ -17,11 +17,12 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
   $name = $_POST['name'];
   $lastName = $_POST['lastName'];
 
-  $query = "SELECT id_school, COUNT(*) as count from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
+  $query = "SELECT * from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
+  $count = mysqli_num_rows($consulta);
 
-  if ($results['count'] == 1) {
+  if ($count == 1) {
     $_SESSION['idCode'] = $idCode;
     $_SESSION['id_school'] = $results['id_school'];
 
