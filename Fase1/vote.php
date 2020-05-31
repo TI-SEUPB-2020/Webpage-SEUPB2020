@@ -1,5 +1,6 @@
 <?php
   session_start();
+  echo "<p id='school'>".$_SESSION['id_school']."</p>";
 ?>
 <html lang="es">
 <head>
@@ -19,14 +20,14 @@
   <script>
     var table;
     $.ajax({
-          url: 'images.php?id_school=' + '<?php  $_SESSION['id_school']?>',
+          url: 'images.php?id_school=' + $("#school").text(),
           type: 'get',
           dataType: 'JSON',
           success: function(response){
             table = response;
             for(var i = 0; i < response.length; i++) {
-              var url = "images/" + table[i].location + "/" + i + ".jpg";
               var index = i + 1;
+              var url = "images/" + table[i].location + "/" + index + ".jpg";
               $("#images").append("<img onclick='imageClick(" + index + ")' data-toggle='modal' data-target='#myModal' src='" + url + "' style='width: 33.33%;'/>");
             }
           }
@@ -34,14 +35,16 @@
     var currentImg = 0;
     function imageClick(index) {
       currentImg = index;
-      $("#modalImage").attr("src", "images/" + table[currentImg - 1].school_name + "/1.jpg");
+      console.log(currentImg);
+      $("#modalImage").attr("src", "images/" + table[currentImg - 1].location + "/" + currentImg + ".jpg");
       $("#title").html(table[currentImg - 1].title);
-      $("#description").html(table[currentImg - 1].description);   
+      $("#description").html(table[currentImg - 1].description);
     }
 
     function vote() {
       location.replace("final.php?schoolId=" + currentImg);
     }
+
   </script>
   <div class="header">
     <h1>Vota por tu favorita</h1>
