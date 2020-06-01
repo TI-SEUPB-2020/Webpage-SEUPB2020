@@ -1,6 +1,6 @@
 <?php
   session_start();
-  echo "<p id='school'>".$_SESSION['id_school']."</p>";
+  echo "<p id='school' style='color: purple; '>".$_SESSION['id_school']."</p>";
 ?>
 <html lang="es">
 <head>
@@ -13,7 +13,15 @@
   <link rel="icon" type="image/png" href="res/favicon.png">
   <link rel="stylesheet" href="stylesheet.css">
   <style>
-      
+    body{
+      color: white;
+      background-image: linear-gradient(to bottom, rgba(153, 50, 204,2), rgba(0,0,0,1));
+      background-attachment: fixed
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+    }
   </style>
 </head>
 <body>
@@ -81,8 +89,9 @@
 
   </script>
   <div class="header">
-    <h1>Vota por tu favorita</h1>
-    <p>Selecciona la imágen y vota por ella a continuación de ver su título y su descripción</p>
+    <br><br>
+     <img src="res/votetitle.png" style="width:100%;"><br><br> 
+     <img src="res/votedescription.png" style="width:100%;"><br><br> 
   </div>
 
   <div class="container" style="height: 100%; width: 80%;">
@@ -97,7 +106,7 @@
           <img id='modalImage' src="" width=100%></img>
         </div>
         <div class="modal-body">
-        	<h4 class="modal-title"id="title">Hola</h4>
+        	<h4 style="color: black;" class="modal-title" id="title"></h4>
           	<p style="color: black;" id="description"></p>
         </div>
         <div class="modal-footer">
@@ -111,7 +120,7 @@
   <div class="modal fade" id="warning" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-body">
+        <div class="modal-body" style="color: black;">
         	¿Estás seguro de que quieres votar por esta forografía?
         </div>
         <div class="modal-footer">

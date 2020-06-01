@@ -1,12 +1,9 @@
 <?php
-
 session_start();
 $idCode = $_SESSION['idCode'];
-$name = $_SESSION['name'];
-$lastName = $_SESSION['lastName'];
+$school = $_SESSION['id_school'];
 
 echo 'El id es:' . $idCode . '</br>';
-echo 'El nombre es:' . $name . '</br>';
-echo 'El apellido es:' . $lastName . '</br>';
+echo 'La escuela es:' . $school . '</br>';
 
 ?>

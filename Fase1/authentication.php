@@ -1,5 +1,7 @@
 <?php
-
+session_start();
+unset($_SESSION['idCode']);
+unset($_SESSION['id_school']);
 function debug_to_console($data) {
     $output = $data;
     if (is_array($output))
@@ -8,8 +10,7 @@ function debug_to_console($data) {
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
 }
 
-require 'db_connection.php';
-session_start();
+include 'db_connection.php';
 $message = '';
 
 if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastName'])) {
@@ -17,11 +18,11 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
   $name = $_POST['name'];
   $lastName = $_POST['lastName'];
 
-  $query = "SELECT * from registered_students where code = '$idCode' and full_name = '$lastName $name' and voted = 'false'";
+  $query = "SELECT * from registered_students where code = '$idCode' and voted = '0' and full_name = '$lastName $name';";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
   $count = mysqli_num_rows($consulta);
-
+  $message = $count;
   if ($count == 1) {
     $_SESSION['idCode'] = $idCode;
     $_SESSION['id_school'] = $results['id_school'];
