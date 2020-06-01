@@ -99,11 +99,7 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">Nombres</label>
-			    <input type="text" class="form-control" name="name" placeholder="Ingresa tu o tus nombres">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Apellidos</label>
-			    <input type="text" class="form-control" name="lastName" placeholder="Ingresa tus dos apellidos">
+			    <input type="text" class="form-control" name="name" placeholder="Ingresa tu CI">
 			  </div>
 			  <input type="submit" class="btn btn-warning" value="Verificar"></input>
 			</form>
