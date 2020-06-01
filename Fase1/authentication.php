@@ -13,12 +13,11 @@ function debug_to_console($data) {
 include 'db_connection.php';
 $message = '';
 
-if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastName'])) {
+if (!empty($_POST['idCode']) && !empty($_POST['ci'])) {
   $idCode = $_POST['idCode'];
-  $name = $_POST['name'];
-  $lastName = $_POST['lastName'];
+  $ci = $_POST['ci'];
 
-  $query = "SELECT * from registered_students where code = '$idCode' and voted = '0' and full_name = '$lastName $name';";
+  $query = "SELECT * from registered_students where code = '$idCode' and voted = '0' and ci = '$ci';";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
   $count = mysqli_num_rows($consulta);
@@ -32,7 +31,7 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
     $message = 'La información es incorrecta o el usuario ya votó';
   }
 
-} else if (!empty($_POST['idCode']) || !empty($_POST['name']) || !empty($_POST['lastName'])) {
+} else if (!empty($_POST['idCode']) || !empty($_POST['ci'])) {
   $message = 'Datos incompletos';
 }
 
@@ -98,12 +97,8 @@ if (!empty($_POST['idCode']) && !empty($_POST['name']) && !empty($_POST['lastNam
 			    <input type="text" class="form-control" name="idCode" placeholder="Ingresa tu código">
 			  </div>
 			  <div class="form-group">
-			    <label for="exampleInputEmail1">Nombres</label>
-			    <input type="text" class="form-control" name="name" placeholder="Ingresa tu o tus nombres">
-			  </div>
-			  <div class="form-group">
-			    <label for="exampleInputEmail1">Apellidos</label>
-			    <input type="text" class="form-control" name="lastName" placeholder="Ingresa tus dos apellidos">
+			    <label for="exampleInputEmail1">CI</label>
+			    <input type="text" class="form-control" name="ci" placeholder="Ingresa tu número de CI">
 			  </div>
 			  <input type="submit" class="btn btn-warning" value="Verificar"></input>
 			</form>
