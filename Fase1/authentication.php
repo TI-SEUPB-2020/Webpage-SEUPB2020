@@ -17,7 +17,7 @@ if (!empty($_POST['idCode']) && !empty($_POST['ci'])) {
   $idCode = $_POST['idCode'];
   $ci = $_POST['ci'];
 
-  $query = "SELECT * from registered_students where code = '$idCode' and voted = '0' and ci = '$ci';";
+  $query = "SELECT * from registered_students where code='$idCode' and voted='0' and ci='$ci';";
   $consulta = mysqli_query($db_connection, $query);
   $results = mysqli_fetch_array($consulta);
   $count = mysqli_num_rows($consulta);
@@ -97,10 +97,11 @@ if (!empty($_POST['idCode']) && !empty($_POST['ci'])) {
 			    <input type="text" class="form-control" name="idCode" placeholder="Ingresa tu código">
 			  </div>
 			  <div class="form-group">
-			    <label for="exampleInputEmail1">Nombres</label>
-			    <input type="text" class="form-control" name="name" placeholder="Ingresa tu CI">
+			    <label for="exampleInputEmail1">Carnet de Identidad</label>
+			    <input type="text" class="form-control" name="ci" placeholder="Ingresa tu CI">
 			  </div>
-			  <input type="submit" class="btn btn-warning" value="Verificar"></input>
+			  <input type="submit" class="btn btn-warning" value="Verificar"></input><br><br>
+			  <p>¿Tienes problemas iniciando sesión? - Contáctate con nosotros al 78898825 o 72581793
 			</form>
 				<?php
 		    		if (!empty($message)) {
